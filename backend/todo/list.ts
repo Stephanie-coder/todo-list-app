@@ -15,8 +15,8 @@ export const list = api<ListTodosParams, ListTodosResponse>(
   { expose: true, method: "GET", path: "/todos" },
   async (req) => {
     const userId = "default-user"; // Simplified for now
-    const limit = req.limit || 50;
-    const offset = req.offset || 0;
+    const limit = req.limit ?? 50;
+    const offset = req.offset ?? 0;
     
     let whereClause = "WHERE user_id = $1";
     const params: any[] = [userId];
@@ -28,7 +28,7 @@ export const list = api<ListTodosParams, ListTodosResponse>(
       paramIndex++;
     }
     
-    if (req.category) {
+    if (req.category !== undefined && req.category !== "") {
       whereClause += ` AND category = $${paramIndex}`;
       params.push(req.category);
       paramIndex++;
