@@ -136,14 +136,14 @@ export default function AIAssistant({ open, onClose, onTaskSuggestionAccept }: A
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex gap-2">
-                  <Input
-                    placeholder="e.g., I want to improve my health, prepare for a presentation, organize my home..."
-                    value={suggestionInput}
-                    onChange={(e) => setSuggestionInput(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSuggestTasks()}
-                    className="flex-1"
-                  />
-                  <Button 
+                                    <Input
+                     placeholder="e.g., I want to improve my health, prepare for a presentation, organize my home..."
+                     value={suggestionInput}
+                     onChange={(e) => setSuggestionInput(e.target.value)}
+                     onKeyDown={(e) => e.key === 'Enter' && handleSuggestTasks()}
+                     className="flex-1"
+                   />
+<Button 
                     onClick={handleSuggestTasks}
                     disabled={!suggestionInput.trim() || suggestTasksMutation.isPending}
                   >

@@ -465,9 +465,11 @@ function dateReviver(key: string, value: any): any {
 
 function encodeQuery(parts: Record<string, string | string[]>): string {
     const pairs: string[] = []
-    for (const key in parts) {
-        const val = (Array.isArray(parts[key]) ?  parts[key] : [parts[key]]) as string[]
-        for (const v of val) {
+    const keys = Object.keys(parts)
+    for (const key of keys) {
+        const raw = parts[key] as string | string[]
+        const values = (Array.isArray(raw) ? raw : [raw]) as string[]
+        for (const v of values) {
             pairs.push(`${key}=${encodeURIComponent(v)}`)
         }
     }
@@ -478,7 +480,7 @@ function encodeQuery(parts: Record<string, string | string[]>): string {
 // and returns the same record with a narrower type.
 // @ts-ignore - TS ignore because makeRecord is not always used
 function makeRecord<K extends string | number | symbol, V>(record: Record<K, V | undefined>): Record<K, V> {
-    for (const key in record) {
+    for (const key of Object.keys(record) as Array<keyof typeof record>) {
         if (record[key] === undefined) {
             delete record[key]
         }

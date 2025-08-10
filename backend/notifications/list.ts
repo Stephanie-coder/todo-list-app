@@ -14,14 +14,14 @@ export const list = api<ListNotificationsParams, ListNotificationsResponse>(
   { expose: true, method: "GET", path: "/notifications" },
   async (req) => {
     const userId = "default-user"; // Simplified for now
-    const limit = req.limit || 20;
-    const offset = req.offset || 0;
+    const limit = req.limit ?? 20;
+    const offset = req.offset ?? 0;
     
     let whereClause = "WHERE user_id = $1 AND (expires_at IS NULL OR expires_at > NOW())";
     const params: any[] = [userId];
     let paramIndex = 2;
     
-    if (req.unreadOnly) {
+    if (req.unreadOnly === true) {
       whereClause += ` AND read = false`;
     }
     
